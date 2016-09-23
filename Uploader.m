@@ -39,7 +39,8 @@
   }
   // send request
   NSURL *fileUrl = [NSURL fileURLWithPath:filepath];
-  NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+  NSString *uuid = [[NSUUID UUID] UUIDString];
+  NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:uuid];
   NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:(id)self delegateQueue:[NSOperationQueue mainQueue]];
     _task = [session uploadTaskWithRequest:req fromFile:fileUrl];
     [_task resume];
