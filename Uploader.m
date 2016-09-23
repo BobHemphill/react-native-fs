@@ -72,7 +72,8 @@
     return _params.errorCallback(error);
   }
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
-   return _params.completeCallback(nil, httpResponse);
+    NSString *body = @"rock your body";
+   return _params.completeCallback(body, httpResponse);
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
