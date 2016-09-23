@@ -32,12 +32,12 @@
   NSDictionary *file = [_params.files objectAtIndex:0];
   NSString *filepath = file[@"filepath"];
     
-//  NSFileManager *fileManager = [NSFileManager defaultManager];
-//  if (![fileManager fileExistsAtPath:filepath]){
-//    NSLog(@"Failed to open target file at path: %@", filepath);
-//    NSError* error = [NSError errorWithDomain:@"Uploader" code:NSURLErrorFileDoesNotExist userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Failed to open target file at path: %@", filepath]}];
-//    return _params.errorCallback(error);
-//  }
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  if (![fileManager fileExistsAtPath:filepath]){
+    NSLog(@"Failed to open target file at path: %@", filepath);
+    NSError* error = [NSError errorWithDomain:@"Uploader" code:NSURLErrorFileDoesNotExist userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Failed to open target file at path: %@", filepath]}];
+    return _params.errorCallback(error);
+  }
   // send request
   NSURL *fileUrl = [NSURL fileURLWithPath:filepath];
   NSString *uuid = [[NSUUID UUID] UUIDString];
