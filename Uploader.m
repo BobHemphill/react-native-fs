@@ -25,8 +25,9 @@
 
   // set headers
   NSString *contentType = @"video/mp4";
+  NSString *amzAcl = @"bucket-owner-full-control";
   [req setValue:contentType forHTTPHeaderField:@"Content-Type"];
-
+  [req setValue:amzAcl forHTTPHeaderField:@"x-amz-acl"];
   // add file
   NSDictionary *file = [_params.files objectAtIndex:0];
   NSString *filepath = file[@"filepath"];
