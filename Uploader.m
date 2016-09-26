@@ -19,7 +19,7 @@
 - (void)uploadFiles:(RNFSUploadParams*)params
 {
   _params = params;
-
+  _responseData = [[NSMutableDictionary alloc] init];
   NSString *method = _params.method;
   NSURL *url = [NSURL URLWithString:_params.toUrl];
   NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
@@ -153,7 +153,7 @@
     return _params.errorCallback(error);
   }
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
-    NSMutableData *responseForTask = _responseData[@(task.taskIdentifier)];
+    NSMutableData *responseForTask = [_responseData objectForKey:@(task.taskIdentifier)];
     NSString *body = @"";
     if (responseForTask) {
         body = [[NSString alloc] initWithData:responseForTask encoding:NSUTF8StringEncoding];
@@ -171,10 +171,10 @@
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     NSLog(@"---RECEIVED DATA---");
-    NSMutableData *responseData = _responseData[@(dataTask.taskIdentifier)];
+    NSMutableData *responseData = [_responseData objectForKey:@(dataTask.taskIdentifier)];
     if (!responseData) {
         responseData = [NSMutableData dataWithData:data];
-        _responseData[@(dataTask.taskIdentifier)] = responseData;
+        [_responseData setObject:responseData forKey:@(dataTask.taskIdentifier)];
     } else {
         [responseData appendData:data];
     }
